@@ -1,0 +1,133 @@
+"
+" @emiller's ~/.vmrc
+"
+
+"
+" defaults and pathogen kick off
+"
+
+filetype off
+execute pathogen#infect()
+filetype plugin indent on
+syntax on
+
+set nu " Line numbers
+set rnu " Set relative line numbers
+set title " Set window title
+set scrolloff=3 " Keep at least 3 lines visible above + below cursor
+set cursorline " Highlight the current line
+set showmode " Show current file mode
+set wildmenu " expand wildcards in commands on <tab>
+set wildmode=list:longest
+set ttyfast
+set ttymouse=xterm2
+set mouse=a
+set pastetoggle=<F9>
+set expandtab
+set tabstop=2
+set shiftwidth=2
+
+"
+" multi-cursor
+"
+
+let g:multi_cursor_next_ke = '<C-d>'
+
+
+"
+" searching
+"
+
+nmap <leader>/ :Unite grep:.<cr>
+nmap <leader><leader> :Unite file buffer<cr>
+
+set ignorecase
+set smartcase " intelligently deal with case-sensative search
+set gdefault " default global replace
+set incsearch
+set showmatch
+set hlsearch " Highlight search terms
+
+"
+" backups/swaps and what not
+"
+
+set swapfile
+set backup
+set undofile " persist file undo history
+set dir=~/.vim/backups
+set backupdir=~/.vim/backups
+set undodir=~/.vim/backups
+let yankring_history_dir="~/.vim/backups"
+au FocusLost * :wa " Autosave
+
+"
+" styling
+"
+
+set background=dark
+colorscheme ir_black
+
+"
+" rainbow parens
+"
+
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+"
+" NERDtree
+"
+
+au BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+nmap <leader>N :NERDTree<cr>
+
+"
+" old settings through the years
+"
+" set expandtab
+" set guifont=Terminus\ 9
+" set linebreak
+" set magic
+" setnumber
+" setruler
+" setscrolloff=3
+" setshiftwidth=2
+" settabstop=2
+" setsmartindent
+" setnoswapfile
+" set nobackup
+" set cursorline
+" filetype on
+" filetype indent on
+" filetype plugin on
+" let vimclojure#HighlightBuiltins=1
+" let vimclojure#ParenRainbow=1
+" let yankring_history_dir="~/.vim"
+" highlight LineNr ctermfg=grey
+" highlight LineNr guifg=grey
+" colorscheme ir_black
