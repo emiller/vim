@@ -39,17 +39,20 @@ set synmaxcol=512
 let g:tex_comment_nospell=1
 
 "
-" backups & swaps
+" backups, swaps and gsession
 "
 
 set swapfile
 set backup
-set undofile " persist file undo history
+set undofile
 set dir=~/.vim/backups
 set backupdir=~/.vim/backups
 set undodir=~/.vim/backups
 let yankring_history_dir="~/.vim/backups"
-au FocusLost * :wa " Autosave
+
+let g:autoload_session = 1
+let g:autosave_session = 1
+" autocmd FocusLost * :silent! wall
 
 "
 " styling, cursor colors by mode, rainbow parens
