@@ -15,92 +15,90 @@ syntax on
 " defaults
 "
 
-set shortmess=I
-set splitbelow
-set splitright
-set nu
-set rnu
-set title
-set scrolloff=3
 set cursorline
-set showmode
-set wildmenu
-set wildmode=list,longest
-set ttyfast
-set ttymouse=xterm2
-set ttyscroll=5
+set eol
+set expandtab
 set lazyredraw
 set mouse=a
 set pastetoggle=<F9>
-set expandtab
-set tabstop=2
 set shiftwidth=2
+set rnu
+set scrolloff=3
+set showmode
+set shortmess=I
+set splitbelow
+set splitright
 set synmaxcol=512
+set tabstop=2
+set title
+set titleold="" 
+set titlestring=VIM:\ %F
+set wildmenu
+set wildmode=list,longest
+"set ttyfast
+set ttymouse=xterm
+set ttyscroll=5
 let g:tex_comment_nospell=1
+nmap <leader>qa :qa!<cr>
 
 "
 " backups, swaps and gsession
 "
 
-set swapfile
-set backup
-set undofile
-set dir=~/.vim/backups
 set backupdir=~/.vim/backups
+set backup
+set dir=~/.vim/backups
+set swapfile
 set undodir=~/.vim/backups
-let yankring_history_dir="~/.vim/backups"
-
-let g:autoload_session = 1
-let g:autosave_session = 1
-" autocmd FocusLost * :silent! wall
+set undofile
+let g:autoload_session=1
+let g:autosave_session=1
+let yankring_history_dir='~/.vim/backups'
 
 "
 " styling, cursor colors by mode, rainbow parens
 "
 
-set background=dark
 colorscheme ir_black
-hi NonText cterm=NONE ctermfg=NONE
-hi Comment cterm=NONE ctermfg=gray
-
-if &term =~ "xterm\\|rxvt"
-  let &t_SI = "\<Esc>]12;lightgreen\x7"
-  let &t_EI = "\<Esc>]12;red\x7"
-  silent !echo -ne "\033]12;red\007"
-  autocmd VimLeave * silent !echo -ne "\033]112\007"
-endif
-
-let g:rbpt_colorpairs = [
-    \ ['blue',       '#FF6000'],
-    \ ['cyan', '#00FFFF'],
-    \ ['darkmagenta',    '#CC00FF'],
-    \ ['yellow',   '#FFFF00'],
-    \ ['red',     '#FF0000'],
-    \ ['darkgreen',    '#00FF00'],
-    \ ['White',         '#c0c0c0'],
-    \ ['blue',       '#FF6000'],
-    \ ['cyan', '#00FFFF'],
-    \ ['darkmagenta',    '#CC00FF'],
-    \ ['yellow',   '#FFFF00'],
-    \ ['red',     '#FF0000'],
-    \ ['darkgreen',    '#00FF00'],
-    \ ['White',         '#c0c0c0'],
-    \ ['blue',       '#FF6000'],
-    \ ['cyan', '#00FFFF'],
-    \ ['darkmagenta',    '#CC00FF'],
-    \ ['yellow',   '#FFFF00'],
-    \ ['red',     '#FF0000'],
-    \ ['darkgreen',    '#00FF00'],
-    \ ['White',         '#c0c0c0'],
-    \ ]
-
-let g:rbpt_max = 21
-let g:rbpt_loadcmd_toggle = 0
-
+set background=dark
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
+hi NonText cterm=NONE ctermfg=NONE
+hi Comment cterm=NONE ctermfg=gray
+let g:rbpt_max=21
+let g:rbpt_loadcmd_toggle=0
+let g:rbpt_colorpairs=[
+  \ ['blue',        '#FF6000'],
+  \ ['cyan',        '#00FFFF'],
+  \ ['darkmagenta', '#CC00FF'],
+  \ ['yellow',      '#FFFF00'],
+  \ ['red',         '#FF0000'],
+  \ ['darkgreen',   '#00FF00'],
+  \ ['White',       '#c0c0c0'],
+  \ ['blue',        '#FF6000'],
+  \ ['cyan',        '#00FFFF'],
+  \ ['darkmagenta', '#CC00FF'],
+  \ ['yellow',      '#FFFF00'],
+  \ ['red',         '#FF0000'],
+  \ ['darkgreen',   '#00FF00'],
+  \ ['White',       '#c0c0c0'],
+  \ ['blue',        '#FF6000'],
+  \ ['cyan',        '#00FFFF'],
+  \ ['darkmagenta', '#CC00FF'],
+  \ ['yellow',      '#FFFF00'],
+  \ ['red',         '#FF0000'],
+  \ ['darkgreen',   '#00FF00'],
+  \ ['White',       '#c0c0c0'],
+  \ ]
+
+if &term =~ "xterm\\|rxvt"
+  let &t_SI="\<Esc>]12;lightgreen\x7"
+  let &t_EI="\<Esc>]12;red\x7"
+  silent !echo -ne "\033]12;red\007"
+  autocmd VimLeave * silent !echo -ne "\033]112\007"
+endif
 
 "
 " searching, multi-cursor, nerdtree and ctrlp
@@ -108,31 +106,33 @@ au Syntax * RainbowParenthesesLoadBraces
 
 set ignorecase
 set gdefault
+set hlsearch
 set incsearch
 set showmatch
-set hlsearch
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/bower_components
 set wildignore+=*/node_modules
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe
-let g:multi_cursor_next_ke = '<C-d>'
-
+let g:ctrlp_map='<C-p>'
+let g:ctrlp_cmd='CtrlP'
+let g:ctrlp_working_path_mode='ra'
+let g:multi_cursor_next_ke='<C-d>'
 nmap <leader>/ :Unite grep:.<cr>
 nmap <leader><leader> :<C-u>Unite file buffer<cr>
-" nmap <leader><leader> :Unite file buffer<cr>
-" nnoremap <C-P> :<C-u>Unite -start-insert file buffer<cr>
 
 au BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 nmap <leader>N :NERDTree<cr>
 
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
+autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
 
 """"""""""""""""""""""""""""""""""""""
 "
 " old settings through the years
 "
+" nmap <leader><leader> :Unite file buffer<cr>
+" nnoremap <C-P> :<C-u>Unite -start-insert file buffer<cr>
+" autocmd FocusLost * :silent! wall
+" set nu
 " set expandtab
 " set guifont=Terminus\ 9
 " set linebreak
@@ -155,3 +155,4 @@ let g:ctrlp_working_path_mode = 'ra'
 " highlight LineNr ctermfg=grey
 " highlight LineNr guifg=grey
 " colorscheme ir_black
+
