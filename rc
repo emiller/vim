@@ -35,10 +35,12 @@ set titleold=""
 set titlestring=VIM:\ %F
 set wildmenu
 set wildmode=list,longest
-"set ttyfast
+set ttyfast
 set ttymouse=xterm
 set ttyscroll=5
 let g:tex_comment_nospell=1
+nmap <leader>bu :bunload<cr>
+nmap <leader>bd :bdelete!<cr>
 nmap <leader>qa :qa!<cr>
 
 "
@@ -54,6 +56,10 @@ set undofile
 let g:autoload_session=1
 let g:autosave_session=1
 let yankring_history_dir='~/.vim/backups'
+
+command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
+" command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis
+nmap <leader>do :DiffOrig<cr>
 
 "
 " styling, cursor colors by mode, rainbow parens
@@ -116,9 +122,12 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe
 let g:ctrlp_map='<C-p>'
 let g:ctrlp_cmd='CtrlP'
 let g:ctrlp_working_path_mode='ra'
-let g:multi_cursor_next_ke='<C-d>'
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_quit_key='<C-c>'
+"<C-M>'
 nmap <leader>/ :Unite grep:.<cr>
 nmap <leader><leader> :<C-u>Unite file buffer<cr>
+nmap <leader>cc :CtrlPClearCache<cr>
 
 au BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 nmap <leader>N :NERDTree<cr>
