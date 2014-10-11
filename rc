@@ -39,9 +39,19 @@ set ttyfast
 set ttymouse=xterm
 set ttyscroll=5
 let g:tex_comment_nospell=1
+
+"
+" random bindings
+"
+
 nmap <leader>bu :bunload<cr>
 nmap <leader>bd :bdelete!<cr>
 nmap <leader>qa :qa!<cr>
+nmap <leader>gs :!git status %<cr>
+nmap <leader>gS :!git status<cr>
+nmap <leader>gd :!git diff %<cr>
+nmap <leader>gD :!git diff<cr>
+nmap <leader>do :DiffOrig<cr>
 
 "
 " backups, swaps and gsession
@@ -56,10 +66,7 @@ set undofile
 let g:autoload_session=1
 let g:autosave_session=1
 let yankring_history_dir='~/.vim/backups'
-
 command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
-" command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis | wincmd p | diffthis
-nmap <leader>do :DiffOrig<cr>
 
 "
 " styling, cursor colors by mode, rainbow parens
