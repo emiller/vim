@@ -51,7 +51,10 @@ nmap <leader>gs :!git status %<cr>
 nmap <leader>gS :!git status<cr>
 nmap <leader>gd :!git diff %<cr>
 nmap <leader>gD :!git diff<cr>
-nmap <leader>do :DiffOrig<cr>
+nmap <leader>gt :!git difftool -y %<cr>
+nmap <leader>gT :!git difftool -y<cr>
+nmap <leader>dt :diffthis<cr>
+nmap <leader>do :diffoff!<cr>
 
 "
 " backups, swaps and gsession
