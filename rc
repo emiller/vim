@@ -31,7 +31,7 @@ set splitright
 set synmaxcol=512
 set tabstop=2
 set title
-set titleold="" 
+set titleold=""
 set titlestring=VIM:\ %F
 set wildmenu
 set wildmode=list,longest
@@ -83,6 +83,8 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 hi NonText cterm=NONE ctermfg=NONE
 hi Comment cterm=NONE ctermfg=gray
+hi ExtraWhitespace ctermbg=236
+
 let g:rbpt_max=21
 let g:rbpt_loadcmd_toggle=0
 let g:rbpt_colorpairs=[
@@ -134,15 +136,16 @@ let g:ctrlp_cmd='CtrlP'
 let g:ctrlp_working_path_mode='ra'
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_quit_key='<C-c>'
-"<C-M>'
 nmap <leader>/ :Unite grep:.<cr>
 nmap <leader><leader> :<C-u>Unite file buffer<cr>
 nmap <leader>cc :CtrlPClearCache<cr>
 
-au BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" au BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 nmap <leader>N :NERDTree<cr>
 
 autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
+autocmd VimEnter * CtrlPClearAllCaches
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t/
 
 """"""""""""""""""""""""""""""""""""""
 "
