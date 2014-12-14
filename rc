@@ -44,6 +44,7 @@ let g:tex_comment_nospell=1
 " random bindings
 "
 
+nmap <leader>!  :!sh -c 'cd `dirname %`; PS_PREFIX="\! VIM \! " bash'<cr><cr>
 nmap <leader>bu :bunload<cr>
 nmap <leader>bd :bdelete!<cr>
 nmap <leader>qa :qa!<cr>
@@ -146,6 +147,11 @@ nmap <leader>N :NERDTree<cr>
 autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
 autocmd VimEnter * CtrlPClearAllCaches
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t/
+
+let g:ctrlp_custom_ignore = {
+ \ 'dir':  '\v[\/](\.bundle|\.vagrant|\.git|\.svn|\.sbt|\.ivy2|target|bower|node_modules|dist|build)$',
+ \ 'file': '\v\.(exe|so|d|class|jar|zip|bz2|tar|tgz|tar\.gz|jpg|jpeg|bmp|gif|png|ico|pdf)$',
+ \ }
 
 """"""""""""""""""""""""""""""""""""""
 "
