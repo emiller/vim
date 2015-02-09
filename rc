@@ -37,7 +37,7 @@ set wildmenu
 set wildmode=list,longest
 set ttyfast
 set ttymouse=xterm
-set ttyscroll=5
+set ttyscroll=3
 let g:tex_comment_nospell=1
 
 "
@@ -45,7 +45,6 @@ let g:tex_comment_nospell=1
 "
 
 nmap <leader>!  :!sh -c 'cd `dirname %`; PS_PREFIX="\! VIM \! " bash'<cr><cr>
-nmap <leader>bu :bunload<cr>
 nmap <leader>bd :bdelete!<cr>
 nmap <leader>qa :qa!<cr>
 nmap <leader>gs :!git status %<cr>
