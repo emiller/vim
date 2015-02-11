@@ -47,6 +47,10 @@ let g:tex_comment_nospell=1
 nmap <leader>!  :!sh -c 'cd `dirname %`; PS_PREFIX="\! VIM \! " bash'<cr><cr>
 nmap <leader>bd :bdelete!<cr>
 nmap <leader>qa :qa!<cr>
+nmap <leader>gA :!git add %<cr>
+nmap <leader>gB :!hub browse<cr>
+nmap <leader>gC :!git commit -m 
+nmap <leader>gP :!git push<cr>
 nmap <leader>gs :!git status %<cr>
 nmap <leader>gS :!git status<cr>
 nmap <leader>gd :!git diff %<cr>
