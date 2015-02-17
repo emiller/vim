@@ -15,6 +15,7 @@ syntax on
 " defaults
 "
 
+set nocompatible
 set cursorline
 set eol
 set expandtab
