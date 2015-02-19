@@ -52,7 +52,7 @@ let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_quit_key='<C-c>'
 
 nmap <leader><leader> :<C-u>Unite file buffer<cr>
-nmap <leader>/  :Unite grep:.<cr>
+nmap <leader>/  :NERDTree<cr>
 nmap <leader>!  :!sh -c 'cd `dirname %`; PS_PREFIX="\! VIM \! " bash'<cr><cr>
 nmap <leader>bd :bdelete!<cr>
 nmap <leader>cc :CtrlPClearCache<cr>
