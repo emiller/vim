@@ -86,6 +86,11 @@ function! multiple_cursors#get_latency_debug_file()
   return s:latency_debug_file
 endfunction
 
+" Quit out of multicursor mode, fixes #27.
+function! multiple_cursors#quit()
+  call s:exit()
+endfunction
+
 " Creates a new cursor. Different logic applies depending on the mode the user
 " is in and the current state of the buffer.
 " 1. In normal mode, a new cursor is created at the end of the word under Vim's
