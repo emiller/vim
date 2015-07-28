@@ -2,6 +2,9 @@
 " @emiller's ~/.vmrc
 "
 
+set t_Co=256
+set nocompatible
+
 "
 " pathogen kick off
 "
@@ -15,16 +18,20 @@ syntax on
 " defaults
 "
 
-set nocompatible
+set nocindent
+set autoindent
 set cursorline
+set encoding=utf-8
 set eol
 set expandtab
 set lazyredraw
+set foldmethod=manual
 set mouse=a
 set pastetoggle=<F9>
-set shiftwidth=2
 set rnu
 set scrolloff=3
+set smartindent
+set shiftwidth=2
 set showmode
 set shortmess=I
 set splitbelow
@@ -57,6 +64,7 @@ nmap <C-x> :update<cr>
 nmap <leader><leader> :<C-u>Unite file buffer<cr>
 nmap <leader>/  :NERDTree<cr>
 nmap <leader>!  :!sh -c 'cd `dirname %`; PS_PREFIX="\! VIM \! " bash'<cr><cr>
+nmap <leader>ws :set list! list?<cr>
 nmap <leader>bd :bdelete!<cr>
 nmap <leader>bh :hide<cr>
 nmap <leader>cc :CtrlPClearCache<cr>
