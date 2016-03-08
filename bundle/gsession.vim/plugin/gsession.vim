@@ -43,7 +43,7 @@ fun! s:session_dir(...)
     let sesdir = expand('$HOME/.vim/session')
   endif
   if !isdirectory(sesdir)
-    call mkdir(sesdir)
+    call mkdir(sesdir, 'p')
   endif
   return l:sesdir
 endf
@@ -86,13 +86,11 @@ fun! s:session_branch(...)
     return matchstr(s:session_identity(a:1), '-git--.*$', '', '')
   endif
 
-  if filereadable('.git' . s:sep . 'HEAD')
-    let head = readfile('.git' . s:sep . 'HEAD')
-    let len = strlen('ref: refs/heads/')
-    return '-git-' . strpart(head[0], len - 1)
-  else
-    return ''
-  endif
+  let branch = system("git symbolic-ref --short HEAD")
+
+  return v:shell_error ?
+        \ '' :
+        \ printf('-git--%s', substitute(branch, '\n$', '', ''))
 endf
 
 fun! s:session_name(...)
@@ -138,7 +136,7 @@ fun! s:warn(msg)
 endf
 
 " TODO: don't pollute "g:" scope.
-fun! g:complete_names(arglead, cmdline, pos)
+fun! g:Complete_names(arglead, cmdline, pos)
   let items = s:session_names(s:completing_global)
   return filter(items, "v:val =~ '^' . a:arglead")
 endf
@@ -149,7 +147,7 @@ fun! s:input_session_name(global)
   let name = input(
         \   "Session name: ",
         \   strlen('v:this_session') ? s:session_name(v:this_session) : '',
-        \   'customlist,g:complete_names'
+        \   'customlist,g:Complete_names'
         \ )
   call inputrestore()
 
