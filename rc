@@ -29,7 +29,8 @@ set foldmethod=manual
 set mouse=a
 set pastetoggle=<F9>
 set rnu
-set scrolloff=3
+set nu
+set scrolloff=2
 set smartindent
 set shiftwidth=2
 set showmode
