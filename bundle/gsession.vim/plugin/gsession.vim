@@ -138,7 +138,7 @@ fun! s:warn(msg)
 endf
 
 " TODO: don't pollute "g:" scope.
-fun! g:complete_names(arglead, cmdline, pos)
+fun! s:complete_names(arglead, cmdline, pos)
   let items = s:session_names(s:completing_global)
   return filter(items, "v:val =~ '^' . a:arglead")
 endf

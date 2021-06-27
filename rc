@@ -4,23 +4,23 @@
 
 set t_Co=256
 set nocompatible
+filetype plugin indent on
+syntax on
 
 "
 " pathogen kick off
 "
 
-filetype off
+" filetype off
 execute pathogen#infect()
-filetype plugin indent on
-syntax on
 
 "
 " defaults
 "
 
-set nocindent
-set autoindent
-set cursorline
+"set nocindent
+"set autoindent
+set nocursorline
 set encoding=utf-8
 set eol
 set expandtab
@@ -29,6 +29,7 @@ set foldmethod=manual
 set mouse=a
 set pastetoggle=<F9>
 set rnu
+set nu
 set scrolloff=3
 set smartindent
 set shiftwidth=2
@@ -47,6 +48,7 @@ set ttyfast
 set ttymouse=xterm
 set ttyscroll=3
 let g:tex_comment_nospell=1
+let g:ruby_path="/usr/bin/ruby"
 
 "
 " key bindings
@@ -58,25 +60,36 @@ let g:ctrlp_working_path_mode='ra'
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_quit_key='<C-c>'
 
+function ShellOut(cmd)
+  execute '! echo -e "\\n\\e[0;3$(echo $((1+($RANDOM / (32767/6)))))m$(date --utc -Ins)\\e[0;33m\\033[00m\\n"; sh -c "cd %:p:h/.; ' .a:cmd. '"'
+endfunction
+
 nnoremap <C-c> :call multiple_cursors#quit()<CR>
+" inoremap ii <ESC>
+let mapleader = "\\"
 
 nmap <C-x> :update<cr>
 nmap <leader><leader> :<C-u>Unite file buffer<cr>
 nmap <leader>/  :NERDTree<cr>
-nmap <leader>!  :!sh -c 'cd `dirname %`; PS_PREFIX="\! VIM \! " bash'<cr><cr>
+nmap <leader>!  :call ShellOut('PS_PREFIX=\"\\033[00m\\e[0;33mVIM >> $(basename ' . w:unite_window.cwd . ') >\\033[00m \" bash')<cr><cr>
 nmap <leader>ws :set list! list?<cr>
 nmap <leader>bd :bdelete!<cr>
 nmap <leader>bh :hide<cr>
 nmap <leader>cc :CtrlPClearCache<cr>
 nmap <leader>dt :diffthis<cr>
 nmap <leader>do :diffoff!<cr>
-nmap <leader>gb :!hub browse<cr><cr>
-nmap <leader>gd :!git diff %<cr>
-nmap <leader>gD :!git diff<cr>
-nmap <leader>gt :!git difftool -y %<cr><cr>
-nmap <leader>gT :!git difftool -y<cr><cr>
-nmap <leader>gs :!git status %<cr>
-nmap <leader>gS :!git status<cr>
+nmap <leader>gb :call ShellOut('hub browse')<cr><cr>
+nmap <leader>gd :call ShellOut('git diff %:p')<cr>
+nmap <leader>gD :call ShellOut('git diff')<cr>
+nmap <leader>gt :call ShellOut('git difftool -y %:p')<cr><cr>
+nmap <leader>gT :call ShellOut('git difftool -y')<cr><cr>
+nmap <leader>gs :call ShellOut('git status %:p')<cr>
+nmap <leader>gS :call ShellOut('git status')<cr>
+nmap <leader>wc :tabclose<cr>
+nmap <leader>wh :tabprev<cr>
+nmap <leader>wl :tabnext<cr>
+nmap <leader>wn :tabnew<cr>
+
 nmap <leader>N :NERDTree<cr>
 nmap <leader>qa :qa!<cr>
 
@@ -152,7 +165,7 @@ set hlsearch
 set incsearch
 set showmatch
 set wildignore+=.pid
-set wildignore+=*.7z,*.gz,*.jar,*.rar,*.tar,*.tar.gz,*.war,*.zip
+set wildignore+=*.7z,*.gz,*.jar,*.rar,*.tar,*.tar.gz,*.war,*.zip,*.beam
 set wildignore+=*.log,*.lock,.pid,*.swp
 set wildignore+=*.a,*.class,*.exe,*.pyc,*.so
 set wildignore+=*/bower_components
@@ -169,6 +182,7 @@ set wildignore+=*/.sandbox
 set wildignore+=*/.svn
 set wildignore+=*/.tmp
 set wildignore+=*/.vagrant
+" set wildignore+=*/app/components
 
 autocmd FileChangedRO * echohl WarningMsg | echo "File changed RO." | echohl None
 autocmd VimEnter * CtrlPClearAllCaches

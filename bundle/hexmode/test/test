@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+# Checks if a test passed or failed. Increments the `$pass` or `$fail`
+# variables in the parent scope. Writes a "pass" or "FAIL" message.
+#
+# Returns nothing.
+checkResult() {
+    local code=$?
+
+    if [[ $code -eq 0 ]]; then
+        echo "pass"
+        pass=$((pass + 1))
+    else
+        echo "FAIL: $code"
+        fail=$((fail + 1))
+    fi
+}
+
+
+# Run `vim` with arguments to load the hexmode plugin.
+#
+# $@ - All arguments are passed to vim.
+#
+# Returns nothing
+runVim() {
+    # shellcheck disable=SC2068
+    vim -Nn --cmd "source ../plugin/hexmode.vim" ${@+"$@"} &> /dev/null
+}
+
+# Run `vim` and write the loaded buffer to stdout.
+#
+# $@ - All arguments are passed to vim.
+#
+# Returns nothing.
+#
+# @see https://stackoverflow.com/a/28563534
+runVimB() {
+    local tmpfile tmpfileEscaped
+
+    tmpfile=$(mktemp)
+    tmpfileEscaped=$tmpfile
+    tmpfileEscaped=${tmpfileEscaped//\\/\/}
+    tmpfileEscaped=${tmpfileEscaped// /\\ }
+
+    # shellcheck disable=SC2068
+    runVim ${@+"$@"} +"noautocmd wq! ${tmpfileEscaped}"
+    cat "$tmpfile"
+    rm "$tmpfile"
+}
+
+pass=0
+fail=0
+cd "${0%/*}"
+
+echo -n "Edit the text file without Hexmode ... "
+[[ "$(runVimB uncompressed.txt)" == "$(cat uncompressed.txt)" ]]
+checkResult
+
+echo -n "Edit the text file with Hexmode ... "
+[[ "$(runVimB -b uncompressed.txt)" == "$(xxd uncompressed.txt)" ]]
+checkResult
+
+echo -n "Edit the compressed file without Hexmode ... "
+[[ "$(runVimB compressed.txt.gz)" == "$(gzip --uncompress --to-stdout compressed.txt.gz)" ]]
+checkResult
+
+echo -n "Edit the compressed file as binary. Gzip should win and no hex should be shown ... "
+[[ "$(runVimB -b compressed.txt.gz)" == "$(gzip --uncompress --to-stdout compressed.txt.gz)" ]]
+checkResult
+
+echo -n "Edit a zip file without Hexmode ... "
+[[ "$(runVimB zipfile.zip)" == *"zip.vim version"* ]]
+checkResult
+
+echo -n "Edit a zip file as binary. Zip plugin should win, no hex should be shown ... "
+[[ "$(runVimB -b zipfile.zip)" == *"zip.vim version"* ]]
+checkResult
+
+echo -n "Edit a tar file without Hexmode ... "
+[[ "$(runVimB tarfile.tar)" == *"tar.vim version"* ]]
+checkResult
+
+echo -n "Edit a tar file as binary. Tar plugin should win, no hex should be shown ... "
+[[ "$(runVimB -b tarfile.tar)" == *"tar.vim version"* ]]
+checkResult
+
+echo -n "A binary file doesn't change when saved ... "
+tmpfile=$(mktemp)
+cp zipfile.zip "$tmpfile"
+runVim -b "$tmpfile" +"wq!" &> /dev/null
+diff -q "$tmpfile" zipfile.zip &> /dev/null
+checkResult
+rm "$tmpfile"
+
+echo
+echo "$pass tests pass"
+echo "$fail tests failed"
+
+if [[ $fail -gt 0 ]]; then
+    exit 1
+fi
