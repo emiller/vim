@@ -30,7 +30,7 @@ set mouse=a
 set pastetoggle=<F9>
 set rnu
 set nu
-set scrolloff=3
+set scrolloff=2
 set smartindent
 set shiftwidth=2
 set showmode
@@ -189,7 +189,7 @@ autocmd VimEnter * CtrlPClearAllCaches
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$\| \+\ze\t/
 
 let g:ctrlp_custom_ignore = {
- \ 'dir':  '\v[\/](\.bundle|\.vagrant|\.git|\.svn|\.sbt|\.ivy2|target|bower|node_modules|dist|build)$',
+ \ 'dir':  '\v[\/](\.bundle|\.vagrant|\.git|\.svn|\.sbt|\.ivy2|target|bower|app\/components|node_modules|dist|build)$',
  \ 'file': '\v\.(exe|so|d|class|jar|zip|bz2|tar|tgz|tar\.gz|jpg|jpeg|bmp|gif|png|ico|pdf)$',
  \ }
 
